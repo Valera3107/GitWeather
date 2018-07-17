@@ -138,10 +138,6 @@ document.addEventListener('DOMContentLoaded', () => {
 // ==========================
       const cardText = document.createElement('div');
       cardText.classList.add('card-text');
-      
-      // const curTime = document.createElement('h4');
-      // curTime.classList.add('last-update');
-      // curTime.textContent = `Current time: ${t}`;
 
       const dateItem = document.createElement('h6');
       dateItem.classList.add('date');
