@@ -25,14 +25,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function clearContent(event){
     event.preventDefault();
-    firstDay = 0;
-    currentStatus = null;
-    currentWeather = null;
-    dayOfWeek = null;
-    time = null;
-    img = null;
-    gallery.removeChild(flipContainer);
-    gallery.remove();
+    
+    const arrOfCards = document.querySelectorAll('.flip-container');
+    arrOfCards.forEach(elem => elem.remove());
   }
       
   function showWeather(event){
