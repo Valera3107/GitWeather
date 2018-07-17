@@ -7,12 +7,12 @@ document.addEventListener('DOMContentLoaded', () => {
   gallery.classList.add('gallery-card');
   const arrOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
   let firstDay = 0;
-  let date = new Date();
   let currentStatus;
   let currentWeather;
   let dayOfWeek;
   let time;
   let img;
+  let date = new Date();
 
   const searchBtn = document.querySelector('.submit-btn');
   const city = document.querySelector('.js-name');
@@ -39,10 +39,11 @@ document.addEventListener('DOMContentLoaded', () => {
     throw new Error(`Error after fetch: ${response.statusText}`);
   })
   .then(data => {
+    let currentDate = data.current.last_updated.split(" ");
 
     data.forecast.forecastday.forEach(day => {
-      let dateNow = `${date.getFullYear()}-0${date.getMonth()+1}-0${date.getDay()+1}`;
-      if(day.date === dateNow) {
+      
+      if(day.date === currentDate[0]) {
         currentStatus = data.current.condition.text;
         currentWeather = data.current.feelslike_c;
         firstDay = date.getDay()-1;
@@ -71,7 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
       
       time = showTime(date);
       makeCard(currentStatus, day.day.condition.icon, currentWeather,
-      day.day.maxtemp_c, day.day.mintemp_c, time, day.date, 
+      day.day.maxtemp_c, day.day.mintemp_c, day.date, 
       data.location.country, data.location.name, day.day.condition.text, dayOfWeek, img);
     })
   })
@@ -91,7 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
    }
 
 
-   function makeCard(status, icon, curWeather, max, min, t, dat, locCountry, locName, text, dayW){
+   function makeCard(status, icon, curWeather, max, min, dat, locCountry, locName, text, dayW){
       
       const flipContainer = document.createElement('div');
       flipContainer.setAttribute('ontouchstart', "this.classList.toggle('hover');");
@@ -138,9 +139,9 @@ document.addEventListener('DOMContentLoaded', () => {
       const cardText = document.createElement('div');
       cardText.classList.add('card-text');
       
-      const curTime = document.createElement('h4');
-      curTime.classList.add('last-update');
-      curTime.textContent = `Current time: ${t}`;
+      // const curTime = document.createElement('h4');
+      // curTime.classList.add('last-update');
+      // curTime.textContent = `Current time: ${t}`;
 
       const dateItem = document.createElement('h6');
       dateItem.classList.add('date');
@@ -154,7 +155,7 @@ document.addEventListener('DOMContentLoaded', () => {
       textInfo.classList.add('text-info');
       textInfo.textContent = `About weather: ${text}`;
 
-      cardText.append(curTime, dateItem, locationItem, textInfo);
+      cardText.append(dateItem, locationItem, textInfo);
 
       cardBlock.appendChild(cardTitle);
       cardBlock.appendChild(cardText);
